@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Short English News-InShorts</title>
+    <link rel="shortcut icon"
+        href="https://play-lh.googleusercontent.com/hd-zjb0kvaVWufm0SEsant8zt0-HS_0tUMv79m2onY_wpkdrAArYV8oZ0vQPiMolpPIa">
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+    <script>
+        document.body.innerHTML = `<div class="heading-container">
+<img src="https://play-lh.googleusercontent.com/hd-zjb0kvaVWufm0SEsant8zt0-HS_0tUMv79m2onY_wpkdrAArYV8oZ0vQPiMolpPIa" width="100px"
+height="100px">
+<h1>Inshorts</h1>
+<div id="mainContainer" class="main-container"></div>`;
+
+        const getData = async () => {
+            try {
+                const data = await fetch("https://inshorts-api.herokuapp.com/news?category=politics");
+                const satilites = await data.json();
+                console.log(satilites)
+                console.log(satilites.centres)
+                mainContainer.innerHTML = "";
+                satilites.data.forEach((satilite) => {
+                    displayData(satilite);
+                });
+            } catch (error) {
+                console.log(error);
+            }
+        };
+        getData();
+        const displayData = (obj) => {
+            mainContainer.innerHTML += `
+  <div class="container">
+  <div class="card" style="width: 18rem;">
+  <img src="${obj.imageUrl}" width="290px" height="250px">
+  <div class="card-body">
+    <h4 class="card-title">${obj.title}</h4>
+    <p class="card-text">${obj.content}</p>
+    </div>
+    </div>
+  </div>`;
+        };
+    </script>
+</body>
+
+</html>
